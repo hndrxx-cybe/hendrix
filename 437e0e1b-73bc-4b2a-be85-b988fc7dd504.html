@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Hendrix | Find Friends Through Music</title>
+  <base target="_self">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@preline/preline@2.0.0/dist/preline.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            hendrixPurple: '#8a2be2',
+            hendrixDark: '#0f0a19',
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .animate-float { animation: float 4s ease-in-out infinite; }
+    .fade-in { animation: fadeIn 0.5s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-hendrixDark transition-colors duration-300">
+  <!-- Navigation -->
+  <nav class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <a href="#" class="flex-shrink-0 flex items-center" onclick="navigate(event, 'home')">
+            <i class="fas fa-guitar text-hendrixPurple text-2xl mr-2"></i>
+            <span class="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">The Hendrix</span>
+          </a>
+        </div>
+        <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
+          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-hendrixPurple px-3 py-2 text-sm font-medium" onclick="navigate(event, 'home')">Home</a>
+          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-hendrixPurple px-3 py-2 text-sm font-medium" onclick="navigate(event, 'discover')">Discover</a>
+          <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-hendrixPurple px-3 py-2 text-sm font-medium" onclick="navigate(event, 'matches')">Matches</a>
+          <button id="theme-toggle" class="p-2 rounded-full focus:outline-none">
+            <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
+          </button>
+          <button onclick="navigate(event, 'profile')" class="ml-4 flex items-center justify-center h-10 w-10 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+            <i class="fas fa-user"></i>
+          </button>
+        </div>
+        <div class="-mr-2 flex items-center md:hidden">
+          <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-hendrixPurple focus:outline-none">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-hendrixPurple" onclick="navigate(event, 'home')">Home</a>
+        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-hendrixPurple" onclick="navigate(event, 'discover')">Discover</a>
+        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-hendrixPurple" onclick="navigate(event, 'matches')">Matches</a>
+        <div class="flex items-center px-3 py-2">
+          <span class="text-base font-medium text-gray-700 dark:text-gray-300 mr-3">Theme</span>
+          <button id="mobile-theme-toggle" class="p-2 rounded-full focus:outline-none">
+            <i class="fas fa-moon text-gray-700 dark:text-yellow-300"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="pt-16 min-h-screen">
+    <!-- Home Section -->
+    <section id="home" class="section active">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center">
+          <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+            Find Your <span class="text-hendrixPurple">Music Soulmates</span>
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-10">
+            Connect with people who share your unique music taste. The Hendrix analyzes your favorite artists to find your perfect concert buddies, playlist collaborators, and music-loving friends.
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button onclick="navigate(event, 'discover')" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg">
+              Start Matching <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+            <button onclick="navigate(event, 'profile')" class="px-8 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white font-medium rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 transition-all">
+              <i class="fas fa-user-edit mr-2"></i> Edit Profile
+            </button>
+          </div>
+        </div>
+        
+        <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-gray-200 dark:border-gray-700">
+            <div class="text-hendrixPurple text-3xl mb-4">
+              <i class="fas fa-music"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Music Matching</h3>
+            <p class="text-gray-600 dark:text-gray-300">Our algorithm analyzes your top artists to find people with similar tastes.</p>
+          </div>
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-gray-200 dark:border-gray-700">
+            <div class="text-hendrixPurple text-3xl mb-4">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Community Events</h3>
+            <p class="text-gray-600 dark:text-gray-300">Join local meetups and virtual listening parties with your matches.</p>
+          </div>
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-gray-200 dark:border-gray-700">
+            <div class="text-hendrixPurple text-3xl mb-4">
+              <i class="fas fa-headphones"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Shared Playlists</h3>
+            <p class="text-gray-600 dark:text-gray-300">Collaborate on playlists and discover new music together.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Discover Section -->
+    <section id="discover" class="section hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Discover Music Lovers</h2>
+          <div class="relative">
+            <select id="genre-filter" class="appearance-none bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-full py-2 pl-4 pr-8 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-hendrixPurple">
+              <option value="all">All Genres</option>
+              <option value="rock">Rock</option>
+              <option value="pop">Pop</option>
+              <option value="hiphop">Hip Hop</option>
+              <option value="electronic">Electronic</option>
+              <option value="jazz">Jazz</option>
+              <option value="indie">Indie</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div id="user-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Users will be dynamically inserted here -->
+        </div>
+        
+        <div class="mt-10 flex justify-center">
+          <button id="load-more" class="px-6 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 transition-all">
+            Load More <i class="fas fa-sync-alt ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Matches Section -->
+    <section id="matches" class="section hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Your Music Matches</h2>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+          <div class="p-6">
+            <div class="flex items-center mb-6">
+              <div class="flex-1">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Compatibility Score</h3>
+                <p class="text-gray-600 dark:text-gray-300">Based on your music preferences and listening habits</p>
+              </div>
+              <div class="bg-gradient-to-r from-purple-600 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium">
+                92% Match
+              </div>
+            </div>
+            
+            <div id="matches-container" class="space-y-6">
+              <!-- Matches will be dynamically inserted here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profile" class="section hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col md:flex-row gap-8">
+          <div class="md:w-1/3">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 sticky top-24">
+              <div class="flex flex-col items-center">
+                <div class="relative mb-4">
+                  <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80" 
+                       alt="Profile" 
+                       class="w-32 h-32 rounded-full object-cover border-4 border-hendrixPurple">
+                  <button class="absolute bottom-0 right-0 bg-hendrixPurple text-white p-2 rounded-full hover:bg-purple-700 transition-all">
+                    <i class="fas fa-camera"></i>
+                  </button>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Alex Turner</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">@arctic_monkeys_fan</p>
+                <div class="flex space-x-2 mb-6">
+                  <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm">Indie Rock</span>
+                  <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm">Alternative</span>
+                  <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm">Psychedelic</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-2">
+                  <div class="bg-gradient-to-r from-purple-600 to-blue-500 h-2.5 rounded-full" style="width: 85%"></div>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-6">Profile Strength: 85%</p>
+                <button class="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium py-2 px-4 rounded-full hover:opacity-90 transition-all">
+                  Update Profile
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="md:w-2/3">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6 border border-gray-200 dark:border-gray-700">
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Your Music Preferences</h3>
+              
+              <div class="mb-6">
+                <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Top 5 Favorite Artists</label>
+                <div class="space-y-3">
+                  <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white mr-3">
+                      <i class="fas fa-music"></i>
+                    </div>
+                    <input type="text" class="flex-1 bg-transparent border-none focus:ring-2 focus:ring-hendrixPurple rounded-md dark:text-white" value="Arctic Monkeys">
+                  </div>
+                  <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white mr-3">
+                      <i class="fas fa-music"></i>
+                    </div>
+                    <input type="text" class="flex-1 bg-transparent border-none focus:ring-2 focus:ring-hendrixPurple rounded-md dark:text-white" value="Tame Impala">
+                  </div>
+                  <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white mr-3">
+                      <i class="fas fa-music"></i>
+                    </div>
+                    <input type="text" class="flex-1 bg-transparent border-none focus:ring-2 focus:ring-hendrixPurple rounded-md dark:text-white" value="The Strokes">
+                  </div>
+                  <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white mr-3">
+                      <i class="fas fa-music"></i>
+                    </div>
+                    <input type="text" class="flex-1 bg-transparent border-none focus:ring-2 focus:ring-hendrixPurple rounded-md dark:text-white" value="Lana Del Rey">
+                  </div>
+                  <div class="flex items-center bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white mr-3">
+                      <i class="fas fa-music"></i>
+                    </div>
+                    <input type="text" class="flex-1 bg-transparent border-none focus:ring-2 focus:ring-hendrixPurple rounded-md dark:text-white" value="Mac DeMarco">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mb-6">
+                <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2">Favorite Genres</label>
+                <div class="flex flex-wrap gap-2">
+                  <button class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">Indie Rock</button>
+                  <button class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">Alternative</button>
+                  <button class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">Psychedelic</button>
+                  <button class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">Dream Pop</button>
+                  <button class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">Shoegaze</button>
+                  <button class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2">About Your Music Taste</label>
+                <textarea class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-3 focus:ring-2 focus:ring-hendrixPurple focus:border-transparent dark:text-white" rows="4">I love discovering new indie bands and going to small venue shows. My perfect night is listening to vinyl records with friends and discussing music history.</textarea>
+              </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Connect Your Music Services</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <button class="flex items-center justify-center bg-black text-white p-3 rounded-lg hover:bg-gray-800 transition-all">
+                  <i class="fab fa-spotify text-2xl mr-3"></i>
+                  <span>Connect Spotify</span>
+                </button>
+                <button class="flex items-center justify-center bg-red-500 text-white p-3 rounded-lg hover:bg-red-600 transition-all">
+                  <i class="fab fa-youtube text-2xl mr-3"></i>
+                  <span>Connect YouTube Music</span>
+                </button>
+                <button class="flex items-center justify-center bg-orange-500 text-white p-3 rounded-lg hover:bg-orange-600 transition-all">
+                  <i class="fab fa-soundcloud text-2xl mr-3"></i>
+                  <span>Connect SoundCloud</span>
+                </button>
+                <button class="flex items-center justify-center bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition-all">
+                  <i class="fab fa-apple text-2xl mr-3"></i>
+                  <span>Connect Apple Music</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">The Hendrix</h3>
+          <p class="text-gray-600 dark:text-gray-300">Connecting music lovers since 2023. Find your concert buddies, playlist collaborators, and music soulmates.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Navigation</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-hendrixPurple transition-colors" onclick="navigate(event, 'home')">Home</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-hendrixPurple transition-colors" onclick="navigate(event, 'discover')">Discover</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-hendrixPurple transition-colors" onclick="navigate(event, 'matches')">Matches</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-hendrixPurple transition-colors" onclick="navigate(event, 'profile')">Profile</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Legal</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-hendrixPurple transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-hendrixPurple transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-300 hover:text-hendrixPurple transition-colors">Cookie Policy</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Connect</h3>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-hendrixPurple transition-colors text-xl"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-hendrixPurple transition-colors text-xl"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-hendrixPurple transition-colors text-xl"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-hendrixPurple transition-colors text-xl"><i class="fab fa-tiktok"></i></a>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mt-4">hello@thehendrix.app</p>
+        </div>
+      </div>
+      <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-gray-600 dark:text-gray-300">
+        <p>© 2023 The Hendrix. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sample data for users
+    const users = [
+      {
+        id: 1,
+        name: "Jamie Smith",
+        username: "@jamievinyl",
+        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80",
+        genres: ["Indie", "Rock", "Alternative"],
+        match: 92,
+        artists: ["Phoebe Bridgers", "The 1975", "Beach House"]
+      },
+      {
+        id: 2,
+        name: "Taylor Chen",
+        username: "@taylorswiftie",
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80",
+        genres: ["Pop", "Folk", "Country"],
+        match: 78,
+        artists: ["Taylor Swift", "Lorde", "Haim"]
+      },
+      {
+        id: 3,
+        name: "Marcus Johnson",
+        username: "@marcusbeats",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80",
+        genres: ["Hip Hop", "R&B", "Soul"],
+        match: 65,
+        artists: ["Kendrick Lamar", "Frank Ocean", "Anderson .Paak"]
+      },
+      {
+        id: 4,
+        name: "Sophia Rodriguez",
+        username: "@sophiaedm",
+        avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80",
+        genres: ["Electronic", "House", "Techno"],
+        match: 58,
+        artists: ["Rüfüs Du Sol", "ODESZA", "Lane 8"]
+      },
+      {
+        id: 5,
+        name: "David Kim",
+        username: "@davidjazz",
+        avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80",
+        genres: ["Jazz", "Blues", "Soul"],
+        match: 71,
+        artists: ["Miles Davis", "John Coltrane", "Norah Jones"]
+      },
+      {
+        id: 6,
+        name: "Emma Wilson",
+        username: "@emmarock",
+        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80",
+        genres: ["Rock", "Metal", "Punk"],
+        match: 83,
+        artists: ["Foo Fighters", "Queens of the Stone Age", "The Pretty Reckless"]
+      }
+    ];
+
+    // Sample data for matches
+    const matches = [
+      {
+        id: 1,
+        name: "Jamie Smith",
+        username: "@jamievinyl",
+        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80",
+        match: 92,
+        sharedArtists: ["Arctic Monkeys", "Tame Impala", "The Strokes"],
+        lastActive: "Active 2h ago"
+      },
+      {
+        id: 2,
+        name: "Emma Wilson",
+        username: "@emmarock",
+        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80",
+        match: 83,
+        sharedArtists: ["Arctic Monkeys", "The Strokes", "Lana Del Rey"],
+        lastActive: "Active 1d ago"
+      },
+      {
+        id: 3,
+        name: "David Kim",
+        username: "@davidjazz",
+        avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&h=256&q=80",
+        match: 71,
+        sharedArtists: ["Tame Impala", "Mac DeMarco"],
+        lastActive: "Active 3h ago"
+      }
+    ];
+
+    // DOM Elements
+    const themeToggle = document.getElementById('theme-toggle');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const userGrid = document.getElementById('user-grid');
+    const matchesContainer = document.getElementById('matches-container');
+    const genreFilter = document.getElementById('genre-filter');
+    const loadMoreButton = document.getElementById('load-more');
+    const sections = document.querySelectorAll('.section');
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set dark mode based on system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      }
+      // Update theme icons to match current theme
+      if (typeof toggleTheme === 'function') toggleTheme();
+
+      // Render initial users
+      renderUsers(users);
+      renderMatches(matches);
+
+      // Set active section
+      navigate(null, 'home');
+    });
+
+    // Theme toggle functionality
+    if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+    if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      if (themeToggle) themeToggle.innerHTML = `<i class="fas ${isDark ? 'fa-sun text-yellow-300' : 'fa-moon text-gray-700'}"></i>`;
+      if (mobileThemeToggle) mobileThemeToggle.innerHTML = `<i class="fas ${isDark ? 'fa-sun text-yellow-300' : 'fa-moon text-gray-700'}"></i>`;
+    }
+
+    // Mobile menu toggle
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Navigation system
+    function navigate(event, sectionId) {
+      if (event) event.preventDefault();
+      
+      // Hide all sections
+      sections.forEach(section => {
+        section.classList.add('hidden');
+        section.classList.remove('active');
+      });
+      
+      // Show selected section
+      const activeSection = document.getElementById(sectionId);
+      if (activeSection) {
+        activeSection.classList.remove('hidden');
+        activeSection.classList.add('active');
+      }
+
+      // Close mobile menu if open
+      if (mobileMenu) mobileMenu.classList.add('hidden');
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    // Render users in discover section
+    function renderUsers(usersToRender) {
+      userGrid.innerHTML = '';
+      
+      usersToRender.forEach(user => {
+        const userCard = document.createElement('div');
+        userCard.className = 'bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all transform hover:-translate-y-1';
+        userCard.innerHTML = `
+          <div class="p-6">
+            <div class="flex items-start">
+              <img src="${user.avatar}" alt="${user.name}" class="w-16 h-16 rounded-full object-cover border-2 border-hendrixPurple">
+              <div class="ml-4">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white">${user.name}</h3>
+                <p class="text-gray-600 dark:text-gray-300 text-sm">${user.username}</p>
+                <div class="flex flex-wrap gap-1 mt-2">
+                  ${user.genres.map(genre => `<span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded-full text-xs">${genre}</span>`).join('')}
+                </div>
+              </div>
+              <div class="ml-auto bg-gradient-to-r from-purple-600 to-blue-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                ${user.match}% Match
+              </div>
+            </div>
+            <div class="mt-4">
+              <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Top Artists</h4>
+              <div class="flex flex-wrap gap-2">
+                ${user.artists.map(artist => `<span class="bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded-full text-xs">${artist}</span>`).join('')}
+              </div>
+            </div>
+            <div class="mt-6 flex space-x-3">
+              <button class="flex-1 bg-gradient-to-r from-purple-600 to-blue-500 text-white py-2 rounded-lg hover:opacity-90 transition-all">
+                <i class="fas fa-user-plus mr-2"></i> Connect
+              </button>
+              <button class="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                <i class="fas fa-ellipsis-h"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        userGrid.appendChild(userCard);
+      });
+    }
+
+    // Render matches in matches section
+    function renderMatches(matchesToRender) {
+      matchesContainer.innerHTML = '';
+      
+      matchesToRender.forEach(match => {
+        const matchCard = document.createElement('div');
+        matchCard.className = 'bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600';
+        matchCard.innerHTML = `
+          <div class="flex items-center">
+            <img src="${match.avatar}" alt="${match.name}" class="w-12 h-12 rounded-full object-cover border-2 border-hendrixPurple">
+            <div class="ml-4 flex-1">
+              <h3 class="font-medium text-gray-900 dark:text-white">${match.name}</h3>
+              <p class="text-gray-600 dark:text-gray-300 text-sm">${match.username}</p>
+              <p class="text-gray-500 dark:text-gray-400 text-xs mt-1">${match.lastActive}</p>
+            </div>
+            <div class="bg-gradient-to-r from-purple-600 to-blue-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+              ${match.match}% Match
+            </div>
+          </div>
+          <div class="mt-4">
+            <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Shared Artists</h4>
+            <div class="flex flex-wrap gap-2">
+              ${match.sharedArtists.map(artist => `<span class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-2 py-1 rounded-full text-xs">${artist}</span>`).join('')}
+            </div>
+          </div>
+          <div class="mt-4 flex space-x-3">
+            <button class="flex-1 bg-gradient-to-r from-purple-600 to-blue-500 text-white py-2 rounded-lg hover:opacity-90 transition-all">
+              <i class="fas fa-comment-dots mr-2"></i> Message
+            </button>
+            <button class="flex-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all">
+              <i class="fas fa-music mr-2"></i> Collab
+            </button>
+          </div>
+        `;
+        matchesContainer.appendChild(matchCard);
+      });
+    }
+
+    // Genre filter functionality
+    if (genreFilter) {
+      genreFilter.addEventListener('change', function() {
+        const selectedGenre = this.value.toLowerCase();
+        if (selectedGenre === 'all') {
+          renderUsers(users);
+        } else {
+          const filteredUsers = users.filter(user => 
+            user.genres.some(g => g.toLowerCase() === selectedGenre)
+          );
+          renderUsers(filteredUsers);
+        }
+      });
+    }
+
+    // Load more functionality
+    if (loadMoreButton) {
+      loadMoreButton.addEventListener('click', function() {
+        // In a real app, this would fetch more users from an API
+        // For demo, we'll just duplicate the existing users
+        const moreUsers = [...users, ...users.map(user => ({
+          ...user,
+          id: user.id + users.length
+        }))];
+        renderUsers(moreUsers);
+        this.textContent = 'No More Users';
+        this.disabled = true;
+      });
+    }
+
+    // Prevent default anchor behavior
+    document.querySelectorAll('a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        if (this.getAttribute('href') === '#') {
+          e.preventDefault();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
